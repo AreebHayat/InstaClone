@@ -1,0 +1,26 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @post %>
+<%= link_to "Back to posts", posts_path %>
+<% if user_signed_in? %>
+<% if current_user.id == @post.user.id%>
+
+ <div>
+   <%= link_to "Edit this post", edit_post_path(@post) %> |
+
+   <%= button_to "Destroy this post", @post, method: :delete %>
+ </div>
+<% end %>
+<% end %>
+
+<%= render "comments/form", comment: @comment %>
+<% cnt = 0 %> 
+<% size = @post.comments.count%>
+<%= @post.comments.each do |comment|%>
+  <%= comment.text %>
+  <br> 
+  <% cnt = cnt+1 %>
+  <% if cnt > size %>
+  <% break %>
+  <% end %>
+<% end %>
